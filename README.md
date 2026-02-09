@@ -7,20 +7,6 @@ Implementation of the paper "Mitigating Spurious Correlations for Improved Zero-
 This repository implements a novel framework for zero-shot biomedical text classification that:
 <img width="4372" height="2502" alt="image" src="https://github.com/user-attachments/assets/ffe1cd4d-fdaf-4158-b41b-3e9f1fe7bdbb" />
 
-1. **Identifies spurious correlations** using UMLS knowledge graphs
-2. **Debiases text representations** via translation operations
-3. **Disentangles features** separating stable biomedical semantics from stochastic linguistic variance
-4. **Enables zero-shot generalization** to unseen biomedical concepts
-
-### Key Components
-
-- **Knowledge Graph Construction**: Build label-centric knowledge graphs from UMLS to detect spurious MeSH codes
-- **Translation-Based Debiasing**: Remove spurious influences while preserving semantic structure
-- **Variational Disentanglement**: Separate content features (zI) from variance features (zV)
-- **Contrastive Learning**: Enforce invariance to spurious correlations and linguistic nuances
-- **Zero-Shot Inference**: Match test samples to unseen labels via cosine similarity
-
-
 ## Installation
 
 ### Prerequisites
@@ -88,7 +74,7 @@ Create a CSV file with unseen label information:
 label_id,descriptor_text
 D000001,Calcimycin
 D000002,Temefos
-D000003,Abbreviations as Topic
+D000003, Abbreviations as Topic
 ...
 ```
 
@@ -107,22 +93,6 @@ python train.py \
     --device cuda
 ```
 
-### Monitor Training
-
-Training logs show:
-- Total loss (Equation 9)
-- Reconstruction loss (Equation 5)
-- KL divergence loss (Equation 6)
-- Classification loss
-- Contrastive loss (Equation 8)
-
-```
-Epoch 1/50
-Train - Loss: 2.3456, Recon: 0.8234, KL: 0.2156, Cls: 0.9876, Contrast: 0.3190
-Val - Loss: 2.1234, Recon: 0.7891, KL: 0.2034, Cls: 0.8901, Contrast: 0.3408
-✓ Saved best model
-```
-
 ## Zero-Shot Inference
 
 ### Basic Inference
@@ -139,37 +109,6 @@ python inference.py \
     --device cuda
 ```
 
-### Output Files
-
-**`metrics.json`**: Evaluation metrics
-```json
-{
-  "f1_macro": 0.6000,
-  "f1_micro": 0.5876,
-  "mAP": 0.6780,
-  "auc_macro": 0.9710,
-  "mrr": 0.3890,
-  "precision@5": 0.7234,
-  "precision@10": 0.6891,
-  "precision@15": 0.6543,
-  "recall@5": 0.4123,
-  "recall@10": 0.5234,
-  "recall@15": 0.6012
-}
-```
-
-**`predictions.json`**: Top-k predictions per sample
-```json
-[
-  {
-    "pmid": "34807897",
-    "predicted_labels": ["D000328", "D005260", "D008297", ...],
-    "scores": [0.8234, 0.7891, 0.7456, ...]
-  },
-  ...
-]
-```
-
 ## Evaluation Metrics
 
 The framework reports standard metrics for multi-label classification:
@@ -178,17 +117,8 @@ The framework reports standard metrics for multi-label classification:
 - **mAP** (mean Average Precision): Ranking quality across labels
 - **AUC** (Area Under ROC Curve): Discrimination ability
 - **MRR** (Mean Reciprocal Rank): Position of first correct label
-- **Precision@K**: Precision at top-K predictions
-- **Recall@K**: Recall at top-K predictions
 
 
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Acknowledgments
-
-- This work is supported by the U.S. National Science Foundation (NSF) and National Institute of Health (NIH)
-- PubMedBERT model from Microsoft Research
-- UMLS from the National Library of Medicine
-- MeSH vocabulary from NLM
