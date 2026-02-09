@@ -1,6 +1,6 @@
 # Mitigating Spurious Correlations for Zero-Shot Biomedical Text Classification
 
-Official PyTorch implementation of the paper "Mitigating Spurious Correlations for Improved Zero-Shot Biomedical Text Classification" published in Bioinformatics.
+Implementation of the paper "Mitigating Spurious Correlations for Improved Zero-Shot Biomedical Text Classification "
 
 ## Overview
 
